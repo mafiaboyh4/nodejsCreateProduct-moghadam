@@ -11,12 +11,12 @@
 <body>
     <div class="main-controller">
         <div class="side-bar">
-            <img src="/images/index.jpg">
-            <h3>seyed mohammad tosi</h3>
+            <img src="http://localhost/images/profile/profile.png">
+            <h3><%= adminData.name %> </h3>
             <p>
-                my name is mafia my name is mafia my name is mafia my name is mafia 
+               <%= adminData.description %> 
             </p>
-            <a href="http://" target="_blank">learn more ></a>
+            <a href="<%= adminData.link %>" target="_blank">learn more ></a>
         </div>
         <div class="page">
             <div class="banner-back">
@@ -30,40 +30,30 @@
                     <div class="col-12 my-4">
                         <div class="header">
                             <div class="child col-12 col-md-6 col-lg-10">
-                                <h1>main title</h1>
-                                <p>this beeg is akrami</p>
+                                <h1><%= data.title %> </h1>
+                                <p><%= data.description %></p>
                             </div>
                             <div class="child col-12 col-md-6 col-lg-2">
                                 <h6>
                                     Technologies
                                 </h6>
                                 <ul>
-                                    <li>Html</li>
-                                    <li>css</li>
-                                    <li>javascript</li>
+                                    <% for(var i=0; i < data.technologies.length; i++) { %>
+                                        <li><%= data.technologies[i] %> </li>
+                                    <% } %>
                                 </ul>
                                 <button type="button">Live Demo</button>
                                 <button type="button">gitHub repo</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <a href="/postPreview">
+                    <% for(var i=0; i < data.images.length; i++) { %>
+                        <div class="col-12">
                             <div class="card-custom">
-                                <img src="/images/index.jpg">
+                                <img src="http://localhost/images/projectImages/<%=  data.images[i] %>">
                             </div>
-                        </a>
-                        <a href="/postPreview">
-                            <div class="card-custom">
-                                <img src="/images/index.jpg">
-                            </div>
-                        </a>
-                        <a href="/postPreview">
-                            <div class="card-custom">
-                                <img src="/images/index.jpg">
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -81,7 +71,7 @@
 
         .main-controller .side-bar {
             width: 200px;
-            height: 100vh;
+            height: 120vh;
             background: #1d3557;
             display: flex;
             flex-direction: column;

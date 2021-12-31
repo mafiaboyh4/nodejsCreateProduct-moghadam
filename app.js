@@ -87,20 +87,17 @@ app.use(function(err, req, res, next) {
 });
 
 
-global.checkuser = function(username , password , callback) {
+global.createUser = function( callback) {
   try {
-    User.findOne({username:username , password:password}).then((user) =>{
-      if (user) {
-        return callback(user);
-      } else {
-        const data = {
-          msg: "نام کاربری یا پسورد اشتباه است"
-        }
-        const jsonStr = JSON.stringify(data);
-        
-        return callback(jsonStr);
-      }
+    let newUser = new User({
+      name:"mohammad",
+      description:"im programmer",
+      link:"github.com",
     });
+    newUser.save().then((proj)=>{
+    if (proj) {
+      callback(proj)
+    }});
   } catch (error) {
     console.log(error);
   }
