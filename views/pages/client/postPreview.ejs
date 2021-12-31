@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+    <title>index</title>
+</head>
+<body>
+    <div class="main-controller">
+        <div class="side-bar">
+            <img src="/images/index.jpg">
+            <h3>seyed mohammad tosi</h3>
+            <p>
+                my name is mafia my name is mafia my name is mafia my name is mafia 
+            </p>
+            <a href="http://" target="_blank">learn more ></a>
+        </div>
+        <div class="page">
+            <div class="banner-back">
+                <a href="/">
+                    <i class="pi pi-arrow-left"></i>
+                    <span>BACK</span>
+                </a>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 my-4">
+                        <div class="header">
+                            <div class="child col-12 col-md-6 col-lg-10">
+                                <h1>main title</h1>
+                                <p>this beeg is akrami</p>
+                            </div>
+                            <div class="child col-12 col-md-6 col-lg-2">
+                                <h6>
+                                    Technologies
+                                </h6>
+                                <ul>
+                                    <li>Html</li>
+                                    <li>css</li>
+                                    <li>javascript</li>
+                                </ul>
+                                <button type="button">Live Demo</button>
+                                <button type="button">gitHub repo</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <a href="/postPreview">
+                            <div class="card-custom">
+                                <img src="/images/index.jpg">
+                            </div>
+                        </a>
+                        <a href="/postPreview">
+                            <div class="card-custom">
+                                <img src="/images/index.jpg">
+                            </div>
+                        </a>
+                        <a href="/postPreview">
+                            <div class="card-custom">
+                                <img src="/images/index.jpg">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .main-controller {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            background: #f0faef;
+            overflow-x: hidden;
+
+        }
+
+        .main-controller .side-bar {
+            width: 200px;
+            height: 100vh;
+            background: #1d3557;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px 15px;
+        } 
+        .main-controller .side-bar img {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #fff;
+        }
+        .main-controller .side-bar h3 {
+            font-size: 16px;
+            color: #fff;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .main-controller .side-bar p {
+            color: #686868;
+            text-align: left;
+
+        }
+        .main-controller .side-bar a {
+            color: #da1c1c;
+            text-align: left;
+            width: 100%;
+            display: block;
+        }
+        .main-controller .page {
+            width: calc(100% - 200px);
+        }
+        .card-custom {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: .6s;
+        }
+       
+        .card-custom img  {
+            width: 100%;
+            max-height: 400px;
+        }
+       
+        a , a:hover , a:active , a:focus{
+            color: #212121;
+            text-decoration: none; 
+        }
+
+        .banner-back {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            background: #a8dadb;
+            color: #212121;
+            align-items: center;
+            padding: 10px;
+            
+        }
+
+        .banner-back i {
+            margin-right: 10px;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        .header .child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        .header .child:first-child {
+            align-items: flex-start;
+            width: 80%;
+
+        }
+
+        .header .child button {
+            background: #303030;
+            padding: 10px;
+            min-width: 150px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+            border: none;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://unpkg.com/primevue@^3/resources/themes/saga-blue/theme.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primevue@^3/resources/primevue.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primeflex@2.0.0/primeflex.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/primevue@^3/core/core.min.js"></script>
+
+    <!-- Demo -->
+    <script src="https://unpkg.com/primevue@^3/datatable/datatable.min.js"></script>
+    <script src="https://unpkg.com/primevue@^3/column/column.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>create Project</title>
+</head>
+
+<style>
+    .p-chips , .p-chips .p-chips-multiple-container {
+        width: 100%;
+    }
+    .p-fileupload-content .p-progressbar {
+        height: 30px;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+    .p-paginator .p-paginator-current {
+        margin-left: auto;
+    }
+
+    .p-progressbar {
+        height: .5rem;
+        background-color: #D8DADC;
+    }
+    .p-progressbar .p-progressbar-value {
+        background-color: #607D8B;
+    }
+
+    .p-datepicker {
+        min-width: 25rem;
+    }
+
+    .p-datepicker td {
+        font-weight: 400;
+    }
+
+    .p-datatable.p-datatable-customers .p-datatable-header {
+        padding: 1rem;
+        text-align: left;
+        font-size: 1.5rem;
+    }
+
+    .p-datatable.p-datatable-customers .p-paginator {
+        padding: 1rem;
+    }
+
+    .p-datatable.p-datatable-customers .p-datatable-thead > tr > th {
+        text-align: left;
+    }
+
+    .p-datatable.p-datatable-customers .p-datatable-tbody > tr > td {
+        cursor: auto;
+    }
+
+    .p-datatable.p-datatable-customers .p-dropdown-label:not(.p-placeholder) {
+        text-transform: uppercase;
+    }
+    .tag-controller {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tag-controller .tag {
+        padding: 10px ;
+        border-radius: 10px;
+        color: #212121;
+        font-size: 14px;
+        background: #ce93d8;
+        font-weight: 600;
+    }
+
+    .tag-controller .images-control {
+        height: 40px;
+        width: 40px;
+        border-radius: 5px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+
+</style>
+
+<body>
+    <div id="app">
+        <p-toast></p-toast>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 py-5">
+                    <div class="mx-auto">
+                        <p-datatable :value="list" :paginator="true" class="p-datatable-customers" :rows="10"
+                            data-key="id" paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
+                            :rows-per-page-options="[10,25,50]" current-page-report-template="Showing {first} to {last} of {totalRecords} entries"
+                            responsive-layout="scroll">
+                            <template #header>
+                                <div class="p-d-flex p-jc-between p-ai-center">
+                                    <h5 class="p-m-0">Customers</h5>
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <!-- <p-inputtext v-model="filters['global'].value" placeholder="Keyword Search"></p-inputtext> -->
+                                    </span>
+                                </div>
+                            </template>
+                        <template #empty>
+                            No customers found.
+                        </template>
+                        <template #loading>
+                            Loading customers data. Please wait.
+                        </template>
+                        <p-column field="title" header="title" style="min-width: 14rem">
+                            <template #body="{data}">
+                                {{data.title}}
+                            </template>
+                        </p-column>
+                        <p-column field="description" header="description" style="min-width: 14rem">
+                            <template #body="{data}">
+                                {{data.description}}
+                            </template>
+                        </p-column>
+                        <p-column field="technologies" header="technologies" style="min-width: 14rem">
+                            <template #body="{data}">
+                                <div class="tag-controller">
+                                    <div v-for="item in data.technologies" :key="item" class="tag">{{item}}</div>
+                                </div>
+                            </template>
+                        </p-column>
+                        <p-column field="images" header="images" style="min-width: 14rem">
+                            <template #body="{data}">
+                                <div class="tag-controller">
+                                    <div v-for="item in data.images" :key="item" class="images-control" :style="{'background-image': item}"></div>
+                                </div>
+                            </template>
+                        </p-column>
+                    </p-datatable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const { createApp, ref , onMounted } = Vue;
+    
+        const App = {
+            setup() {
+                const list = ref([]);
+                onMounted(() => {
+                    axios.get('/admin/projects').then(response => {
+                        console.log(response.data);
+                        list.value = response.data;
+                    })
+                })
+                return { list}
+            },
+            components: {
+                "p-datatable": primevue.datatable,
+                "p-column": primevue.column,
+                "p-inputtext": primevue.inputtext,
+                "p-button": primevue.button,
+            }
+        };
+
+        createApp(App)
+            .use(primevue.config.default, { ripple: true })
+            .mount("#app");
+        </script>
+        
+</body>
+</html>

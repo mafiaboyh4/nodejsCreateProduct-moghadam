@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://unpkg.com/primevue@^3/resources/themes/saga-blue/theme.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primevue@^3/resources/primevue.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primeflex@2.0.0/primeflex.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+    <!-- Dependencies -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/primevue@^3/core/core.min.js"></script>
+
+    <!-- Demo -->
+    <script src="https://unpkg.com/primevue@^3/chips/chips.min.js"></script>
+    <script src="https://unpkg.com/primevue@^3/fileupload/fileupload.min.js"></script>
+    <script src="https://unpkg.com/primevue@^3/toast/toast.min.js"></script>
+    <script src="https://unpkg.com/primevue@^3/toastservice/toastservice.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>create Project</title>
+</head>
+
+<style>
+    .p-chips , .p-chips .p-chips-multiple-container {
+        width: 100%;
+    }
+    .p-fileupload-content .p-progressbar {
+        height: 30px;
+    }
+</style>
+<body>
+    <div id="app">
+        <p-toast></p-toast>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 py-5">
+                    <form class="mx-auto">
+                        <div class="form-group">
+                            <label for="title">title</label>
+                            <input type="text" class="form-control" v-model="postData.title" placeholder="title example">
+                        </div>
+                        <div class="form-group">
+                            <label for="discription">description</label>
+                            <textarea class="form-control" v-model="postData.description" placeholder="description example" rows="2" cols="10"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="discription">Technologies</label>
+                            <p-chips v-model="postData.technologies"></p-chips>
+                        </div>
+                        <div class="form-group flex-column">
+                            <label for="images input">images</label>
+                            <p-fileupload name="images[]" url="/admin/uploadImages" @select="onSelect($event.files )" :custom-upload="false"  @upload="onUpload($event.files , $event.xhr)" :multiple="true" accept="image/*" :file-limit="3" :max-file-size="1000000">
+                                <template #empty>
+                                    <p>Drag and drop files to here to upload.</p>
+                                </template>
+                            </p-fileupload>
+                        </div>
+                        <p-button label="submit" @click="onSubmit()" class="p-button-raised"></p-button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const { createApp, ref } = Vue;
+        const { useToast } = primevue.usetoast;
+
+        const App = {
+            setup() {
+                const toast = useToast();
+                const validation = ref(false);
+                const postData = ref({
+                    title:'',
+                    description:'',
+                    technologies:[],
+                    images:[]
+                });
+                const technologies = ref();
+                const files = ref()
+                const onUpload = (files , callback) => {
+                    postData.value.images = [];
+                    postData.value.images = JSON.parse(callback.response).links;
+                    toast.add({severity: 'info', summary: 'Success', detail: 'images Uploaded', life: 3000});
+                }
+
+                const onSelect = (event) => {
+                    console.log(event);
+                }
+
+                const onSubmit = () => {
+                    if (!postData.value.title || !postData.value.description ||  !postData.value.technologies ) return toast.add({severity: 'error', summary: 'error', detail: 'please complete Form', life: 3000});
+                    if (postData.value.images.length == 0) return toast.add({severity: 'error', summary: 'error', detail: 'please upload images', life: 3000});
+                    axios.post('/admin/createProject' , postData.value)
+                    .then(response => {
+                        console.log(response);
+                        postData.value = {
+                            title:'',
+                            description:'',
+                            technologies:[],
+                            images:[]
+                        }
+                        toast.add({severity: 'susses', summary: 'susses', detail: 'created', life: 3000});
+                    })
+                }
+
+                return { technologies, onUpload , onSelect , postData , validation  ,onSubmit}
+            },
+            components: {
+                "p-chips": primevue.chips,
+                "p-fileupload": primevue.fileupload,
+                "p-toast": primevue.toast,
+                "p-button": primevue.button
+            }
+        };
+
+        createApp(App)
+            .use(primevue.config.default, { ripple: true })
+            .use(primevue.toastservice)
+            .mount("#app");
+        </script>
+</body>
+</html>
