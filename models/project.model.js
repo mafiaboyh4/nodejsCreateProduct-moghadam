@@ -5,6 +5,8 @@ var ProjectModelSchema = mongoose.Schema({  //model
     description : { type: String , require: true },
     images : { type: Array , require:true },
     technologies : { type: Array , default: false },
+    liveDemo : { type: String , require:true },
+    repository : { type: String , require:true },
     dateshmsi : String,
     created_at : Date,
     updated_at : Date

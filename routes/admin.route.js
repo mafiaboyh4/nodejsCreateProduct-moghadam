@@ -6,7 +6,12 @@ const { mkdir } = require('fs-extra');
 var fs = require('fs');
 
 router.get('/', function(req, res , next) {
- res.render('pages/admin/listProject',{});
+  User.find({} , function(err , userData) {
+    if (userData.length == 0) return  global.createUser((data) => {
+      res.render('pages/admin/listProject',{});
+    })
+    res.render('pages/admin/listProject',{});
+  })
 });
 
 router.get('/createProject', function(req, res , next) {
@@ -123,7 +128,9 @@ router.post('/createProject', function(req, res , next) {
       title:req.body.title,
       description:req.body.description,
       images:req.body.images,
-      technologies:req.body.technologies
+      technologies:req.body.technologies,
+      liveDemo:req.body.liveDemo,
+      repository:req.body.repository
     });
     newProject.save().then((proj)=>{
     if (proj) {

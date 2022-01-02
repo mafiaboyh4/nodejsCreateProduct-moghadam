@@ -93,6 +93,12 @@ global.createUser = function( callback) {
       name:"mohammad",
       description:"im programmer",
       link:"github.com",
+      side:"front",
+      instagram:"xxx",
+      telegram:"ddd",
+      github:"git",
+      email:"a@gmail.com",
+      skills:['html'],
     });
     newUser.save().then((proj)=>{
     if (proj) {

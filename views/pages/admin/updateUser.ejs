@@ -57,6 +57,9 @@
             margin-bottom: 10px;
         }
 
+        img {
+            border: none;
+        }
 </style>
 <body>
     <div id="app">
@@ -79,13 +82,32 @@
                             <label for="discription">description</label>
                             <textarea class="form-control" v-model="postData.description" placeholder="description example" rows="2" cols="10"></textarea>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="title">link</label>
-                            <input type="text" class="form-control" v-model="postData.link" placeholder="link example">
+                            <label for="title">side</label>
+                            <input type="text" class="form-control" v-model="postData.side" placeholder="link example">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">instagram</label>
+                            <input type="text" class="form-control" v-model="postData.instagram" placeholder="insta link example">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">telegram</label>
+                            <input type="text" class="form-control" v-model="postData.telegram" placeholder="tel link example">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">git hub</label>
+                            <input type="text" class="form-control" v-model="postData.github" placeholder="github example">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">email</label>
+                            <input type="text" class="form-control" v-model="postData.email" placeholder="email link example">
+                        </div>
+                        <div class="form-group">
+                            <label for="discription">skills</label>
+                            <p-chips v-model="postData.skills"></p-chips>
                         </div>
                         <div class="form-group flex-column">
-                            <label for="images input">prfile image</label>
+                            <label for="images input">profile image</label>
                             <p-fileupload name="profile" url="/admin/uploadProfileImages" @select="onSelect($event.files )" :custom-upload="false"  @upload="onUpload($event.files , $event.xhr)" :multiple="false" accept="image/*"  :max-file-size="1000000">
                                 <template #empty>
                                     <img class="image-controller" :src="`http://localhost/images/profile/profile.png`" >
@@ -111,7 +133,7 @@
                 const postData = ref({
                     name:'',
                     description:'',
-                    link:'',
+                    github:'',
                 });
 
                 const data = ref()
@@ -123,7 +145,12 @@
                         postData.value = {
                             name:data.value.name,
                             description:data.value.description,
-                            link:data.value.link,
+                            side:data.value.side,
+                            instagram:data.value.instagram,
+                            telegram:data.value.telegram,
+                            github:data.value.github,
+                            email:data.value.email,
+                            skills:data.value.skills,
                         }
                     })  
                 })
@@ -136,7 +163,9 @@
                 }
 
                 const onSubmit = () => {
-                    if (!postData.value.name || !postData.value.description ||  !postData.value.link ) return toast.add({severity: 'error', summary: 'error', detail: 'please complete Form', life: 3000});
+                    if (!postData.value.name || !postData.value.description ||  !postData.value.github || 
+                        !postData.value.side ||  !postData.value.instagram || !postData.value.telegram ||
+                        !postData.value.email || !postData.value.skills ) return toast.add({severity: 'error', summary: 'error', detail: 'please complete Form', life: 3000});
                     axios.put('/admin/updateProfile' , postData.value)
                     .then(response => {
                         toast.add({severity: 'success', summary: 'susses', detail: 'created', life: 3000});

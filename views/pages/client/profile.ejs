@@ -29,39 +29,46 @@
                 <div class="row">
                     <div class="col-12 my-4">
                         <div class="header">
-                            <div class="child col-12 col-md-6 col-lg-10">
-                                <h1><%= data.title %> </h1>
-                                <p><%= data.description %></p>
+                            <div class="child col-12 col-md-6 col-lg-10 justify-content-start">
+                                <h1><%= adminData.name %> </h1>
+                                <p><%= adminData.side %></p>
+                                <p><%= adminData.description %></p>
                             </div>
                             <div class="child col-12 col-md-6 col-lg-2">
                                 <h6>
-                                    Technologies
+                                    skills
                                 </h6>
                                 <ul>
-                                    <% for(var i=0; i < data.technologies.length; i++) { %>
-                                        <li><%= data.technologies[i] %> </li>
+                                    <% for(var i=0; i < adminData.skills.length; i++) { %>
+                                        <li><%= adminData.skills[i] %> </li>
                                     <% } %>
                                 </ul>
+                                <hr>
+                                <h6>
+                                    connect info
+                                </h6>
+                                <ul>
+                                  <li><%= adminData.email %> </li>
+                                </ul>
+                                <hr>
                                 <button type="button">
-                                    <a href="<%= data.liveDemo %> " target="_blank" rel="noopener noreferrer">
-                                        Live Demo
+                                    <a href="<%= adminData.instagram %> " target="_blank" >
+                                        instagram
                                     </a>
                                 </button>
                                 <button type="button">
-                                    <a href="<%= data.repository %> " target="_blank" rel="noopener noreferrer">
-                                        gitHub repository
+                                    <a href="<%= adminData.github %> " target="_blank" >
+                                        gitHub
+                                    </a>
+                                </button>
+                                <button type="button">
+                                    <a href="<%= adminData.telegram %> " target="_blank" >
+                                        telegram
                                     </a>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <% for(var i=0; i < data.images.length; i++) { %>
-                        <div class="col-12">
-                            <div class="card-custom">
-                                <img src="http://localhost/images/projectImages/<%=  data.images[i] %>">
-                            </div>
-                        </div>
-                    <% } %>
                 </div>
             </div>
         </div>

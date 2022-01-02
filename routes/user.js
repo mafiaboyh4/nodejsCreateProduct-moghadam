@@ -24,6 +24,12 @@ router.get('/postPreview/:id', function(req, res , next) {
     })
   })
 });
+// نمایش پروفایل
+router.get('/myProfile', function(req, res , next) {
+    User.find({} , function(err , userData) {
+      res.render('./pages/client/profile.ejs',{ adminData:userData[0]});
+    })
+});
 
 
 module.exports = router;
